@@ -4,7 +4,7 @@ import os
 import sys
 
 #TODO:以后重构
-__version__ = "1.0.0"
+__version__ = "1.0.1" # 主 副 修
 print(f"版本号：{__version__}")
 
 running = True
@@ -72,12 +72,13 @@ def input_():
             running = False
             return None
         # elif order_type in ('5','5.'):
-        #     return help_()
+        #     return 'help'
         else:
             print("无效的选择")
             time.sleep(1)
 
 def chkdsk():
+    global running
     print("默认参数为'/f'.")
     time.sleep(0.5)
     print("\n此命令将卸载所检查硬盘的逻辑分区, 如C盘,D盘.")
@@ -154,13 +155,14 @@ def chkdsk():
         time.sleep(1.5)
 
 def dism():
+    global running
     print("警告: 默认参数为'/online /cleanup-image /restorehealth'.")
     time.sleep(1)
     print("\n命令为'dism /online /cleanup-image /restorehealth'.")
     continue_ = input("确认继续吗?(Y/N)")
     if continue_.upper() == 'Y':
         try:
-            result= subprocess.run(['dism','/online','/cleanup-image','/restorehealth'],text=True)
+            result = subprocess.run(['dism','/online','/cleanup-image','/restorehealth'],text=True)
             print("\n命令结束.")
             time.sleep(1.5)
 
@@ -187,13 +189,14 @@ def dism():
         time.sleep(1.5)
 
 def sfc():
+    global running
     print("警告: 默认参数为'/scannow'.")
     time.sleep(1)
     print("\n命令为'sfc /scannow'.")
     continue_ = input("确认继续吗?(Y/N)\n")
     if continue_.upper() == 'Y':
         try:
-            result= subprocess.run(['sfc','/scannow'],text=True)
+            result = subprocess.run(['sfc','/scannow'],text=True)
             print("\n命令结束.")
             time.sleep(1)
 
@@ -235,6 +238,8 @@ def run():
         return dism()
     elif type_ == "sfc":
         return sfc()
+    # elif type_ == 'help':
+    #     return help_()
 
 while running:
     run()
